@@ -37,7 +37,7 @@ const albums = [
         title: 'Crawling',
         author: 'Linkin Park',
       },
-    ]
+    ],
   },
   {
     id: 1,
