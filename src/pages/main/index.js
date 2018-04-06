@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StatusBar, TouchableOpacity, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 import styles from './styles';
 
 import AlbumItem from './components/AlbumItem';
@@ -239,17 +240,25 @@ const albums = [
   },
 ];
 
-const Main = () => (
+const Main = ({ navigation }) => (
   <View style={styles.container}>
     <StatusBar barStyle="light-content" />
 
     <FlatList
       data={albums}
       keyExtractor={album => String(album.id)}
-      renderItem={({ item }) => <AlbumItem album={item} />}
+      renderItem={({ item }) => (
+        // ao clicar neste item ele redireciona pra pg algum repassando o item de cada album
+        <AlbumItem onPress={() => navigation.navigate('Album', { album: item })} album={item} />)}
     />
   </View>
 );
+
+Main.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};
 
 Main.navigationOptions = ({ navigation }) => ({
   title: 'Sua Bibliteca',

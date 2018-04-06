@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TextInput, FlatList } from 'react-native';
+import SongItem from 'components/SongItem';
 import styles from './styles';
 
 const songs = [
@@ -46,6 +47,7 @@ const Search = () => (
     <FlatList
       data={songs}
       keyExptractor={song => String(song.id)}
+      renderItem={({ item }) => <SongItem song={item} />}
     />
   </View>
 );
