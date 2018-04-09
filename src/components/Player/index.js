@@ -15,7 +15,7 @@ const Player = () => (
       <Text style={styles.author}>{currentSong.author}</Text>
     </View>
 
-    <View stlye={styles.controls}>
+    <View style={styles.controls}>
       <TouchableOpacity onPress={() => {}}>
         <Icon name="skip-previous" size={24} style={styles.controlIcon} />
       </TouchableOpacity>
