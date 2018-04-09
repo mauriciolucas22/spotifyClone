@@ -1,12 +1,25 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ImageBackground, Text, FlatList } from 'react-native';
 import styles from './styles';
 
-const Album = () => (
-  <View style={styles.container}>
+const Album = ({ navigation }) => {
+  const { album } = navigation.state.params;
 
-  </View>
-);
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        style={styles.thumbnail}
+        source={{ uri: album.thumbnail }}
+        blurRadius={5}
+      >
+        <View style={styles.thumbnailContainer}>
+          <Text style={styles.title}>{album.title}</Text>
+          <Text style={styles.author}>{album.author}</Text>
+        </View>
+      </ImageBackground>
+    </View>
+  );
+};
 
 Album.navigationOptions = ({ navigation }) => ({
   title: navigation.state.params.album.title,
