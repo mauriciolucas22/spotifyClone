@@ -11,13 +11,18 @@ const initialState = {
 };
 
 export default function albums(state = initialState, action) {
-  switch (action.Types) {
+  console.tron.log(action);
+
+  switch (action.type) {
     case Types.GET_REQUEST:
       return { ...state, loading: true };
+
     case Types.GET_SUCCESS:
-      return { data: state.playload.data, loading: false, error: null };
+      return { data: action.playload.data, loading: false, error: null };
+
     case Types.GET_FAILURE:
       return { ...state, loading: false, error: action.playload.error };
+
     default:
       return state;
   }
