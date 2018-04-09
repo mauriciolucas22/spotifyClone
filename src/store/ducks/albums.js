@@ -25,16 +25,16 @@ export default function albums(state = initialState, action) {
 
 
 export const Creators = {
-  getAlbumRequest: () => ({
+  getAlbumsRequest: () => ({
     type: Types.GET_REQUEST,
   }),
 
-  getAlbumSuccess: data => ({
+  getAlbumsSuccess: data => ({
     type: Types.GET_SUCCESS,
     playload: { data },
   }),
 
-  getAlbumFailure: error => ({
+  getAlbumsFailure: error => ({
     type: Types.GET_FAILURE,
     playload: { error },
   }),
