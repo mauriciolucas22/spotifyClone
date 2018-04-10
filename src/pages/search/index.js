@@ -1,55 +1,64 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, TextInput, FlatList } from 'react-native';
 import SongItem from 'components/SongItem';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as SearchActions } from 'store/ducks/search';
+
+import { debounce } from 'lodash'; // execua uma acao depois da chamada de uma funcao
+
 import styles from './styles';
 
-const songs = [
-  {
-    id: 0,
-    title: 'Papercut',
-    author: 'Linkin Park',
-  },
-  {
-    id: 1,
-    title: 'One Step Closer',
-    author: 'Linkin Park',
-  },
-  {
-    id: 2,
-    title: 'With You',
-    author: 'Linkin Park',
-  },
-  {
-    id: 3,
-    title: 'Points of Authority',
-    author: 'Linkin Park',
-  },
-  {
-    id: 4,
-    title: 'Crawling',
-    author: 'Linkin Park',
-  },
-];
+class Search extends Component {
+  static navigationOptions = {
+    title: 'Buscar',
+  };
 
-const Search = () => (
-  <View style={styles.container}>
-    <View style={styles.form}>
-      <TextInput
-        style={styles.searchInput}
-        autoCorrect={false}
-        autoCapitalize="none"
-        placeholder="Buscar por músicas"
-        placeholderTextColor="#666"
-        underlineColorAndroid="transparent"
-      />
-    </View>
+  constructor(props) {
+    super(props);
+    this.searchRequest = debounce(this.props.searchRequest, 1000);
+  }
 
-    <FlatList
-      data={songs}
-      keyExptractor={song => String(song.id)}
-      renderItem={({ item }) => <SongItem song={item} />}
-    />
-  </View>
-);
+  state = {
+    searchInput: '',
+  };
 
-export default Search;
+  search = (searchInput) => {
+    this.setState({ searchInput });
+    this.searchRequest(searchInput);
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.form}>
+          <TextInput
+            style={styles.searchInput}
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="Buscar por músicas"
+            placeholderTextColor="#666"
+            underlineColorAndroid="transparent"
+            value={this.state.searchInput}
+            onChangeText={searchInput => this.search(searchInput)}
+          />
+        </View>
+
+        {/*<FlatList
+          data={songs}
+          keyExptractor={song => String(song.id)}
+          renderItem={({ item }) => <SongItem song={item} />}
+        />*/}
+      </View>
+    );
+  }
+}
+
+const mapStateTpProps = state => ({
+  search: state.search,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(SearchActions, dispatch);
+
+export default connect(mapStateTpProps, mapDispatchToProps)(Search);
