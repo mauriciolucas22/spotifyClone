@@ -7,11 +7,13 @@ export const Types = {
 };
 
 const initialState = Immutable({
-  currentDOng: null,
+  currentSong: null,
 });
 
 export default function player(state = initialState, action) {
   switch (action.type) {
+    case Types.SET_SONG_SUCCESS:
+      return { ...state, currentSong: action.playload.song };
     default:
       return state;
   }
