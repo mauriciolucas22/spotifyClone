@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -10,14 +10,20 @@ import { Creators as PlayerActions } from 'store/ducks/player';
 
 import styles from './styles';
 
-const SongItem = ({ song, setSongRequest }) => (
+const SongItem = ({ song, player, setSongRequest }) => (
   <TouchableOpacity style={styles.container} onPress={() => { setSongRequest(song); }}>
     <View style={styles.songInfo}>
-      <Text style={styles.title}>{song.title}</Text>
+      <Text style={[
+        styles.title,
+        (player.currentSong.id === song.id) ? styles.active : {},
+      ]}
+      >{song.title}</Text>
       <Text style={styles.author}>{song.author}</Text>
     </View>
 
-    <Icon name="play-circle-filled" size={20} style={styles.icon} />
+    { (player.loadingId === song.id)
+      ? <ActivityIndicator size="small" color="#999" style={styles.loading} />
+      : <Icon name="play-circle-filled" size={20} style={styles.icon} /> }
   </TouchableOpacity>
 );
 
@@ -27,6 +33,9 @@ SongItem.propTypes = {
     author: PropTypes.string,
   }).isRequired,
   setSongRequest: PropTypes.func.isRequired,
+  player: PropTypes.shape({
+    loadingId: PropTypes.number,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({

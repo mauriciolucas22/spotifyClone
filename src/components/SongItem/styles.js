@@ -24,6 +24,14 @@ const styles = StyleSheet.create({
     color: colors.dark,
     marginTop: 3,
   },
+
+  loading: {
+    marginRight: 2,
+  },
+
+  active: {
+    color: colors.active,
+  },
 });
 
 export default styles;
