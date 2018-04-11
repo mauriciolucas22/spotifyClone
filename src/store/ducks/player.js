@@ -21,7 +21,7 @@ export default function player(state = initialState, action) {
       return { ...state, loadingId: action.playload.song.id };
 
     case Types.SET_SONG_SUCCESS:
-      return { ...state, currentSong: action.playload.song, loadingId: null, paused: false };
+      return { ...state, list: action.playload.list, currentSong: action.playload.song, loadingId: null, paused: false };
 
     case Types.SET_SONG_FAILURE:
       return { ...state, error: action.playload.error, loadingId: null };
@@ -38,14 +38,14 @@ export default function player(state = initialState, action) {
 }
 
 export const Creators = {
-  setSongRequest: song => ({
+  setSongRequest: (song, list) => ({
     type: Types.SET_SONG_REQUEST,
-    playload: { song },
+    playload: { song, list },
   }),
 
-  setSongSuccess: song => ({
+  setSongSuccess: (song, list) => ({
     type: Types.SET_SONG_SUCCESS,
-    playload: { song },
+    playload: { song, list },
   }),
 
   setSongFailure: error => ({
