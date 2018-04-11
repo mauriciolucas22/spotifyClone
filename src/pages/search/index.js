@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, TextInput, FlatList } from 'react-native';
+import { View, TextInput, FlatList, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
 import SongItem from 'components/SongItem';
 
 import { connect } from 'react-redux';
@@ -15,9 +16,19 @@ class Search extends Component {
     title: 'Buscar',
   };
 
+  static propTypes = {
+    searchRequest: PropTypes.func.isRequired,
+    search: PropTypes.shape({
+      data: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+      })),
+      loading: PropTypes.bool,
+    }).isRequired,
+  };
+
   constructor(props) {
     super(props);
-    this.searchRequest = debounce(this.props.searchRequest, 1000);
+    this.searchRequest = debounce(this.props.searchRequest, 500);
   }
 
   state = {
@@ -45,11 +56,14 @@ class Search extends Component {
           />
         </View>
 
-        {/*<FlatList
-          data={songs}
-          keyExptractor={song => String(song.id)}
+        { this.props.search.loading
+          && <ActivityIndicator size="small" color="#999" style={styles.loading} />}
+
+        <FlatList
+          data={this.props.search.data}
+          keyExtractor={song => String(song.id)}
           renderItem={({ item }) => <SongItem song={item} />}
-        />*/}
+        />
       </View>
     );
   }

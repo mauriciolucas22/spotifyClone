@@ -4076,6 +4076,10 @@ react-native-safe-area-view@^0.7.0:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
+react-native-sound@diego3g/react-native-sound:
+  version "0.10.8"
+  resolved "https://codeload.github.com/diego3g/react-native-sound/tar.gz/0004f81628a34905524e203cda9e3d7c33c4ca86"
+
 "react-native-tab-view@github:react-navigation/react-native-tab-view":
   version "0.0.74"
   resolved "https://codeload.github.com/react-navigation/react-native-tab-view/tar.gz/36ebd834d78b841fc19778c966465d02fd1213bb"
