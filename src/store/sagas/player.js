@@ -13,6 +13,14 @@ export function* play() {
   }
 }
 
+export function* pause() {
+  try {
+    yield call(Sound.pause);
+  } catch (err) {
+    console.tron.log(err);
+  }
+}
+
 export function* setSong(action) {
   try {
     if (Sound.isLoaded()) yield call(Sound.release);

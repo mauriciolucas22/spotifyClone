@@ -10,8 +10,14 @@ import { Creators as PlayerActions } from 'store/ducks/player';
 import styles from './styles';
 
 
-const Player = ({ player }) => {
+const Player = ({ player, play, pause }) => {
   if (player.currentSong.id === undefined) return null;
+
+  /**
+   * define funcao dependendo se está pausado ou tocando
+   */
+  const pressFunction = player.paused ? play : pause;
+  const icon = player.paused ? 'play-circle-filled' : 'pause-circle-filled';
 
   return (
     <View style={styles.container}>
@@ -24,8 +30,8 @@ const Player = ({ player }) => {
         <TouchableOpacity onPress={() => {}}>
           <Icon name="skip-previous" size={24} style={styles.controlIcon} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}}>
-          <Icon name="play-circle-filled" size={36} style={styles.controlIcon} />
+        <TouchableOpacity onPress={pressFunction}>
+          <Icon name={icon} size={36} style={styles.controlIcon} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {}}>
           <Icon name="skip-next" size={24} style={styles.controlIcon} />
